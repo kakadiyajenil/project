@@ -1,12 +1,12 @@
 const OrderServices = require('../../services/order.service');
-const orderServiece = new OrderServices();
+const orderServiec = new OrderServices();
 const CartServices = require('../../services/cart.service');
 const cartService = new CartServices();
 
 exports.addNewOrder = async(req, res) => {
     try {
         let cartItems = await cartService.getAllCart(req.query, req.user);
-        // console.log(cartItems);
+        console.log(cartItems);
         if (cartItems.length === 0) {
             res.status(404).json({ message: `Cart Not Found..Please Try Again...`});
         }
@@ -19,7 +19,7 @@ exports.addNewOrder = async(req, res) => {
         // console.log(orderItems);
         let totalPrice = orderItems.reduce((total, item) => (total + (item.price * item.quantity)),0);
         // console.log(totalPrice);
-        let newOrder = await orderService.addToOrder({
+        let newOrder = await orderServiec.addToOrder({
             user: req.user._id,
             items: orderItems,
             totalAmount: totalPrice
@@ -34,7 +34,7 @@ exports.addNewOrder = async(req, res) => {
 
 exports.getAllOrders = async (req, res) => {
     try {
-        let orders = await orderServiece.getAllOrders({ user: req.user._id,  isDelete: false });
+        let orders = await orderServiec.getAllOrders({ user: req.user._id,  isDelete: false });
         console.log(orders);
         if (!orders) {
             res.status(404).json({ message: `Orders Not Found..Plase Try Again...`});
@@ -48,7 +48,7 @@ exports.getAllOrders = async (req, res) => {
 
 exports.getOrder = async (req, res) => {
     try {
-        let order = await orderServiece.getOrderById({_id: req.query.orderId, isDelete: false}).populate('user').populate('items');
+        let order = await orderServiec.getOrderById({_id: req.query.orderId, isDelete: false});
         console.log(order);
         if (!order) {
             res.status(404).json({ message: `Orders Not Found..Plase Try Again...`});
@@ -62,12 +62,12 @@ exports.getOrder = async (req, res) => {
 
 exports.deleteOrder = async (req, res) => {
     try {
-        let order = await orderServiece.getOrder({_id: req.query.orderId}).populate('user').populate('items');
+        let order = await orderServiec.getOrder({_id: req.query.orderId}).populate('user').populate('items');
         console.log(order);
         if (!order) {
             res.status(404).json({ message: `Orders Not Found..Plase Try Again...`});
         }
-        order = await orderServiece.updateOrder(req.body.orderId, {isDelete: true })
+        order = await orderServiec.updateOrder(req.body.orderId, {isDelete: true })
         res.status(200).json({order, message: `Your Order Deleted Successfully...`});
     } catch (error) {
         console.log(error);

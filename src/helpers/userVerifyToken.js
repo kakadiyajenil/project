@@ -9,7 +9,7 @@ exports.userVerifyToken = async(req, res, next) => {
              return res.json({ message: `Invalid Authorization ${console.error()}`});
        }
        let token = authorization.split(" ")[1];
-       console.log(token);
+    //    console.log(token);
        if (token === undefined) {
            return res.status(401).json({ message: `Unauthorize ${console.error()}`})
        }else{

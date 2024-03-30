@@ -2,7 +2,7 @@ const Review = require('../model/review.model');
 module.exports = class ReviewServices{
     async addNewReview(body) {
         try {
-            return await ReviewServices.create(body);
+            return await Review.create(body);
         } catch (error) {
             console.log(error);
             return error.message;
@@ -24,7 +24,7 @@ module.exports = class ReviewServices{
 
     async getReview(body) {
         try {
-            return await ReviewServices.findOne(body).populate('user').populate('product');
+            return await Review.findOne(body).populate('user').populate('product');
         } catch (error) {
             console.log(error);
             return error.message;
@@ -33,7 +33,7 @@ module.exports = class ReviewServices{
 
     async getReviewById(id) {
         try {
-            return await ReviewServices.findById(id).populate('user').populate('product');
+            return await Review.findById(id).populate('user').populate('product');
         } catch (error) {
             console.log(error);
             return error.message;
@@ -42,7 +42,7 @@ module.exports = class ReviewServices{
 
     async updateReview(id, body) {
         try {
-            return await ReviewServices.findByIdAndUpdate(id, { $set: body} , { new : true }).populate('user').populate('product');
+            return await Review.findByIdAndUpdate(id, { $set: body} , { new : true }).populate('user').populate('product');
         } catch (error) {
             console.log(error);
             return error.message;
