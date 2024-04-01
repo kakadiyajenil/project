@@ -13,10 +13,10 @@ main()
 .then(()=>console.log('DB is connected'))
 .catch(err => console.log(err.message));
 
-const adminsRoutes = require('./src/routes/admin/index.routes');
+const adminsRoutes = require('./routes/admin/index.routes');
 app.use('/api/admin', adminsRoutes);
 
-const userRoutes = require('./src/routes/user/index.routes');
+const userRoutes = require('./routes/user/index.routes');
 app.use('/api/user', userRoutes);
 
 app.listen(port, async ()=> {
